@@ -18,7 +18,6 @@ package sample.jetty;
 
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
-import org.hibernate.validator.HibernateValidator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -29,13 +28,9 @@ import org.springframework.validation.beanvalidation.BeanValidationPostProcessor
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import sample.jetty.rest.JerseyConfig;
 
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import javax.validation.executable.ExecutableValidator;
-
 @SpringBootApplication
 public class SampleJetty8Application extends SpringBootServletInitializer {
+
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(SampleJetty8Application.class, args);

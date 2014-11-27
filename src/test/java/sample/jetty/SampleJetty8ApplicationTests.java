@@ -48,9 +48,9 @@ public class SampleJetty8ApplicationTests {
 	@Test
 	public void testHome() throws Exception {
 		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(
-				"http://localhost:" + this.port, String.class);
+				"http://localhost:" + this.port + "/static.html", String.class);
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
-		assertEquals("index.html", entity.getBody());
+		assertEquals("static", entity.getBody());
 	}
 
 }
