@@ -2,9 +2,7 @@ FROM turbovote/oracle-jdk-7
 MAINTAINER kkoziel
 
 ENV http_proxy "http://10.56.3.1:8080/"
-RUN apt-get update
-RUN apt-get install openjdk-7-jdk -y || echo "error skip"
-RUN apt-get install git maven -y
+RUN apt-get update && apt-get install -y git maven
 
 RUN git clone https://github.com/jermi/jettyapp
 RUN cd jettyapp && mvn clean install package
