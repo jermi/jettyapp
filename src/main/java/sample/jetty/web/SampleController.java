@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import sample.jetty.service.GreetingsService;
 
+import java.util.Date;
+import java.util.Map;
+
 @Controller
 public class SampleController {
 
@@ -34,5 +37,19 @@ public class SampleController {
 	public String helloWorld() {
 		return this.greetingsService.getHelloMessage();
 	}
+
+    //TODO nie działa, nie wiem czemu
+    @RequestMapping("/model")
+    public String home(Map<String, Object> model) {
+        model.put("message", "Hello World");
+        model.put("title", "Hello Home");
+        model.put("date", new Date());
+        return "model";
+    }
+
+    @RequestMapping("/exception")
+    public String foo() {
+        throw new RuntimeException("Expected exception in controller");
+    }
 
 }
