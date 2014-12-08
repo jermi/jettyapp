@@ -16,17 +16,19 @@
 
 package sample.jetty;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import java.nio.charset.Charset;
 
 import static org.junit.Assert.assertEquals;
 
@@ -45,12 +47,59 @@ public class SampleJetty8ApplicationTests {
 	@Value("${local.server.port}")
 	private int port;
 
+    private HttpHeaders createHeaders( final String username, final String password ){
+        return new HttpHeaders(){
+            {
+                String auth = username + ":" + password;
+                byte[] encodedAuth = Base64.encodeBase64(
+                        auth.getBytes(Charset.forName("US-ASCII")));
+                String authHeader = "Basic " + new String( encodedAuth );
+                set( "Authorization", authHeader );
+            }
+        };
+    }
+
 	@Test
-	public void testHome() throws Exception {
-		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(
-				"http://localhost:" + this.port + "/static.html", String.class);
+	public void testHomeBasicAuth() throws Exception {
+//		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(
+//				"http://localhost:" + this.port + "/static.html", String.class);
+
+        ResponseEntity<String> entity = new TestRestTemplate().exchange
+                ("http://localhost:" + this.port + "/static.html", HttpMethod.GET, new HttpEntity<String>(createHeaders("admin", "admin")), String.class);
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 		assertEquals("static", entity.getBody());
 	}
+
+    @Test
+    public void testHomeBasicAuthNoCredentials403() throws Exception {
+		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(
+				"http://localhost:" + this.port + "/static.html", String.class);
+        assertEquals(HttpStatus.UNAUTHORIZED, entity.getStatusCode());
+    }
+
+    @Test
+    public void testHomeBasicAuthWrongCredentials403() throws Exception {
+        ResponseEntity<String> entity = new TestRestTemplate().exchange
+                ("http://localhost:" + this.port + "/static.html", HttpMethod.GET, new HttpEntity<String>(createHeaders("admin", "wrong-password")), String.class);
+        assertEquals(HttpStatus.UNAUTHORIZED, entity.getStatusCode());
+    }
+
+//    @Test
+//    public void userWithWrongCreditials() throws Exception {
+//        RestTemplate rest = new TestRestTemplate();
+//
+//        Credentials credentials = new Credentials();
+//        credentials.setName("user");
+//        credentials.setPassword("password-wrong");
+//
+//        ResponseEntity<Object> response =
+//                rest.exchange(
+//                        LOCALHOST + "/login",
+//                        HttpMethod.POST,
+//                        new HttpEntity<Credentials>(credentials),
+//                        Object.class);
+//
+//        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+//    }
 
 }
