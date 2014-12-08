@@ -18,6 +18,7 @@ package sample.jetty.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,6 +34,13 @@ public class SampleController {
 	@ResponseBody
 	public String helloWorld() {
 		return this.greetingsService.getHelloMessage();
+	}
+
+	@RequestMapping("/protected") // url akcji
+	public String protectedAction(Model model) {
+		model.addAttribute("attr1", "value of attr1");
+		model.addAttribute("attr2", "value of attr2");
+		return "protected"; // zwracamy nazwe widoku w /templates
 	}
 
 }
