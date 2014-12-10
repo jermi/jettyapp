@@ -28,37 +28,19 @@ import org.springframework.validation.beanvalidation.BeanValidationPostProcessor
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import sample.jetty.rest.JerseyConfig;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
-//@EnableAutoConfiguration
-//@ComponentScan
-public class SampleJetty8Application
-        extends SpringBootServletInitializer {
-//        extends WebMvcConfigurerAdapter {
+public class SampleJetty8Application extends SpringBootServletInitializer {
 
 
     public static void main(String[] args) throws Exception {
-		SpringApplication.run(SampleJetty8Application.class, args);
-//        new SpringApplicationBuilder(SampleJetty8Application.class).run(args);
-	}
+        SpringApplication.run(SampleJetty8Application.class, args);
+    }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(SampleJetty8Application.class);
     }
-
 
     @Bean
     public ServletRegistrationBean jerseyServlet() {
@@ -76,34 +58,6 @@ public class SampleJetty8Application
     @Bean
     BeanValidationPostProcessor getBeanValidationPostProcessor() {
         return new BeanValidationPostProcessor();
-    }
-
-    //żeby to było musi dziedziczyć po WebMvcConfigurerAdapter
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/login").setViewName("login");
-//    }
-
-    @Configuration
-    @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-    protected static class ApplicationSecurity extends WebSecurityConfigurerAdapter {
-
-        @Autowired
-        private SecurityProperties security;
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().anyRequest().fullyAuthenticated()
-//                    .and().formLogin().loginPage("/login").failureUrl("/login?error").permitAll()
-                .and().httpBasic();
-        }
-
-        @Override
-        public void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.inMemoryAuthentication().withUser("admin").password("admin")
-                    .roles("ADMIN", "USER").and().withUser("user").password("user")
-                    .roles("USER");
-        }
     }
 
 }
