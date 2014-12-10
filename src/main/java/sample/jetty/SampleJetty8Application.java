@@ -16,6 +16,7 @@
 
 package sample.jetty;
 
+//import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.boot.SpringApplication;
@@ -26,6 +27,11 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.beanvalidation.BeanValidationPostProcessor;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
+import org.springframework.web.servlet.ViewResolver;
+//import org.thymeleaf.spring4.SpringTemplateEngine;
+//import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+//import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+//import org.thymeleaf.templateresolver.TemplateResolver;
 import sample.jetty.rest.JerseyConfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +64,6 @@ public class SampleJetty8Application
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(SampleJetty8Application.class);
     }
-
 
     @Bean
     public ServletRegistrationBean jerseyServlet() {
@@ -105,5 +110,31 @@ public class SampleJetty8Application
                     .roles("USER");
         }
     }
+
+//    @Bean
+//    public TemplateResolver templateResolver(){
+//        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
+//        System.out.println("WWWWWWWWWWWWWWWWWWW!!! " + templateResolver.getPrefix());
+//        templateResolver.setPrefix("/webapp");
+//        templateResolver.setSuffix(".html");
+//        templateResolver.setTemplateMode("HTML5");
+//        return templateResolver;
+//    }
+//
+//    @Bean
+//    public SpringTemplateEngine templateEngine(){
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//        templateEngine.setTemplateResolver(templateResolver());
+//        templateEngine.addDialect(new LayoutDialect());
+//        return templateEngine;
+//    }
+//
+//    @Bean
+//    public ViewResolver viewResolver(){
+//        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver() ;
+//        viewResolver.setTemplateEngine(templateEngine());
+//        viewResolver.setOrder(1);
+//        return viewResolver;
+//    }
 
 }

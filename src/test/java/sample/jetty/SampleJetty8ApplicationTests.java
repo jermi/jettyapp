@@ -58,12 +58,13 @@ public class SampleJetty8ApplicationTests {
             }
         };
     }
+    @Test
+    public void emptyTest() throws Exception {
+
+    }
 
 	@Test
 	public void testHomeBasicAuth() throws Exception {
-//		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(
-//				"http://localhost:" + this.port + "/static.html", String.class);
-
         ResponseEntity<String> entity = new TestRestTemplate().exchange
                 ("http://localhost:" + this.port + "/static.html", HttpMethod.GET, new HttpEntity<String>(createHeaders("admin", "admin")), String.class);
 		assertEquals(HttpStatus.OK, entity.getStatusCode());

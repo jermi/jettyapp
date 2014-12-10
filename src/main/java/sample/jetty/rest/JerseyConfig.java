@@ -9,7 +9,8 @@ import sample.jetty.rest.GreetingsRestService;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
-        register(GreetingsRestService.class) ;
+        register(GreetingsRestService.class);
+        register(JpaRestService.class);
     }
 
 }
