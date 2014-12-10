@@ -12,6 +12,7 @@
     <groupId>pl.kkoziel</groupId>
     <artifactId>jettyapp</artifactId>
     <name>Embedded Jetty 9 app</name>
+    <version>0.0.1</version>
     <packaging>war</packaging>
 
     <repositories>
@@ -75,6 +76,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
