@@ -1,6 +1,6 @@
 #! /bin/bash
 CONTAINER_NAME=jettyapp_container
-IMAGE_NAME=jettyapp
+IMAGE_NAME=jettyapp:dev
 
 if [ -n "$( docker ps -a | grep $CONTAINER_NAME )" ]
 then
