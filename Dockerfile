@@ -1,3 +1,8 @@
-FROM maven:3.2.5-jdk-8-onbuild
+FROM java:8-jre
 MAINTAINER kkoziel
-CMD ["mvn", "clean", "install"]
+
+ADD ./target/jettyapp-1.2.0.RC2.war /srv/jettyapp.war
+WORKDIR /srv
+ENTRYPOINT ["java", "-jar", "/srv/jettyapp.war"]
+
+EXPOSE 8080
