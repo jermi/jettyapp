@@ -1,6 +1,6 @@
 #! /bin/bash
 CONTAINER_NAME=jettyapp_container
-IMAGE_NAME=jettyapp:dev
+IMAGE_NAME=jenker:5000/jettyapp:dev
 
 ./remove-container-docker.sh
 
